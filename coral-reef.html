@@ -1,0 +1,49 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Coral Reef</title>
+<style>html,body{margin:0;height:100%;overflow:hidden;background:linear-gradient(180deg,#0a2a4a,#001a2a)}
+canvas{display:block;width:100%;height:100%}
+</style></head><body>
+<canvas id="c"></canvas>
+<script>
+const c=document.getElementById('c'),x=c.getContext('2d');
+let w,h,last=0;
+const corals=[];
+const fish=[];
+function rs(){w=c.width=innerWidth;h=c.height=innerHeight;
+  corals.length=0;fish.length=0;
+  for(let i=0;i<20;i++)corals.push({x:Math.random()*w,y:h-30+Math.random()*20,
+    h:30+Math.random()*h*.3,w:10+Math.random()*20,
+    c:`hsl(${Math.random()*360},70%,50%)`,a:Math.random()*Math.PI});
+  for(let i=0;i<15;i++)fish.push({x:Math.random()*w,y:h*.3+Math.random()*h*.4,
+    v:Math.random()<.5?1:-1+1,c:`hsl(${Math.random()*360},80%,60%)`,s:3+Math.random()*4})}
+addEventListener('resize',rs);rs();
+let t=0;
+function loop(n){
+  if(n-last<32){requestAnimationFrame(loop);return}last=n;t+=.016;
+  const gr=x.createLinearGradient(0,0,0,h);
+  gr.addColorStop(0,'rgba(20,80,140,.1)');gr.addColorStop(1,'rgba(0,40,80,.3)');
+  x.fillStyle=gr;x.fillRect(0,0,w,h);
+  for(let i=0;i<30;i++){x.fillStyle='rgba(200,230,255,.1)';
+    x.beginPath();x.arc((i*70+t*10)%w,(i*53)%h,1+Math.random(),0,Math.PI*2);x.fill()}
+  corals.forEach(co=>{
+    const sway=Math.sin(t*2+co.a)*5;
+    x.fillStyle=co.c;x.beginPath();
+    x.moveTo(co.x-co.w,co.y);
+    for(let i=0;i<co.h;i+=5){
+      const px=co.x+Math.sin(i*.2+co.a+t)*co.w*0.5+sway;
+      x.lineTo(px,co.y-i);
+    }
+    x.lineTo(co.x+co.w,co.y);x.fill();
+  });
+  fish.forEach(f=>{
+    f.x+=f.v*1.5;if(f.x>w+20)f.x=-20;if(f.x<-20)f.x=w+20;
+    x.fillStyle=f.c;x.beginPath();
+    x.ellipse(f.x,f.y,f.s*1.5,f.s,0,0,Math.PI*2);x.fill();
+    x.beginPath();x.moveTo(f.x+(f.v>0?-f.s*1.5:f.s*1.5),f.y);
+    x.lineTo(f.x+(f.v>0?-f.s*3:f.s*3),f.y-f.s);
+    x.lineTo(f.x+(f.v>0?-f.s*3:f.s*3),f.y+f.s);
+    x.fill();
+  });
+  requestAnimationFrame(loop);
+}
+requestAnimationFrame(loop);
+</script></body></html>

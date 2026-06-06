@@ -1,0 +1,30 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8"><title>CRT Scanlines</title>
+<style>html,body{margin:0;height:100%;overflow:hidden;background:#001a2a;
+color:#5eb3ff;font-family:'Courier New',monospace;display:flex;align-items:center;justify-content:center;flex-direction:column}
+.t{font-size:32px;text-shadow:0 0 8px #5eb3ff;letter-spacing:6px;z-index:2}
+.s{font-size:14px;color:#9ca3af;margin-top:14px;z-index:2;letter-spacing:3px}
+.scan{position:fixed;top:0;left:0;right:0;bottom:0;background:repeating-linear-gradient(0deg,
+rgba(0,0,0,0) 0px,rgba(0,0,0,0) 2px,rgba(0,0,0,.25) 3px,rgba(0,0,0,.25) 4px);pointer-events:none;z-index:3}
+.cur{position:fixed;top:0;left:0;right:0;height:80px;background:linear-gradient(180deg,transparent,rgba(91,179,255,.1) 50%,transparent);pointer-events:none;z-index:3}
+</style></head><body>
+<div class="t">CRT TERMINAL</div>
+<div class="s" id="s">&gt; READY_</div>
+<div class="scan"></div>
+<div class="cur" id="cur"></div>
+<script>
+const phrases=['BOOTING...','SCANNING...','LOADING KERNEL','CHECK MEMORY',
+'192.168.1.42','PING 8.8.8.8','CPU: 2.4GHZ','GPU: ON','TEMP: 45C','STATUS: OK'];
+let i=0,last=0,curY=0;
+const cur=document.getElementById('cur');
+function loop(n){
+  if(n-last<1000){requestAnimationFrame(loop);return}last=n;
+  document.getElementById('s').textContent='> '+phrases[i%phrases.length]+'_';
+  i++;
+  curY=(curY+1)%h;
+  cur.style.top=curY+'px';
+  requestAnimationFrame(loop);
+}
+let h=innerHeight;
+addEventListener('resize',()=>h=innerHeight);
+requestAnimationFrame(loop);
+</script></body></html>

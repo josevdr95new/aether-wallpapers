@@ -1,0 +1,31 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Mandelbrot Zoom</title>
+<style>html,body{margin:0;height:100%;overflow:hidden;background:#000}
+canvas{display:block;width:100%;height:100%}
+</style></head><body>
+<canvas id="c"></canvas>
+<script>
+const c=document.getElementById('c'),x=c.getContext('2d');
+let w,h,last=0;
+function rs(){w=c.width=innerWidth;h=c.height=innerHeight}
+addEventListener('resize',rs);rs();
+let t=0,zoom=1;
+const MAX=40;
+function loop(n){
+  if(n-last<100){requestAnimationFrame(loop);return}last=n;
+  t+=.016;zoom=Math.pow(1.02,t);
+  const img=x.createImageData(w,h),d=img.data;
+  for(let y=0;y<h;y++)for(let i=0;i<w;i++){
+    const zx0=(i-w/2)/(w/3)/zoom-.75,zy0=(y-h/2)/(h/3)/zoom;
+    let zx=zx0,zy=zy0,it=0;
+    while(zx*zx+zy*zy<4&&it<MAX){const t2=zx*zx-zy*zy+zx0;zy=2*zx*zy+zy0;zx=t2;it++}
+    const idx=(y*w+i)*4;
+    if(it===MAX){d[idx]=0;d[idx+1]=0;d[idx+2]=0}
+    else{d[idx]=(it*9)%255;d[idx+1]=(it*5+50)%255;d[idx+2]=(it*15+100)%255}
+    d[idx+3]=255;
+  }
+  x.putImageData(img,0,0);
+  if(zoom>1e10){t=0;zoom=1}
+  requestAnimationFrame(loop);
+}
+requestAnimationFrame(loop);
+</script></body></html>

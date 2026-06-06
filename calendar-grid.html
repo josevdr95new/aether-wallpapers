@@ -1,0 +1,34 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Calendar Grid</title>
+<style>html,body{margin:0;height:100%;overflow:hidden;background:#0a0a14;color:#fff;
+font-family:'Segoe UI';display:flex;align-items:center;justify-content:center;flex-direction:column}
+.m{font-size:18px;color:#9ca3af;letter-spacing:4px;margin-bottom:14px}
+.g{display:grid;grid-template-columns:repeat(7,46px);gap:6px}
+.d{width:46px;height:46px;display:flex;align-items:center;justify-content:center;
+background:#1a1a24;border-radius:8px;font-size:14px;color:#6b7280;position:relative}
+.dh{color:#9ca3af;font-size:10px;height:20px}
+.t{width:46px;height:46px;display:flex;align-items:center;justify-content:center;
+background:linear-gradient(135deg,#5eb3ff,#9b6bff);border-radius:8px;
+font-size:16px;font-weight:bold;color:#fff;box-shadow:0 0 16px rgba(91,179,255,.5)}
+.w{width:46px;height:46px;display:flex;align-items:center;justify-content:center;
+background:#2a1f3a;border-radius:8px;font-size:14px;color:#a78bfa}
+</style></head><body>
+<div class="m" id="m">JUNIO 2026</div>
+<div class="g" id="g"></div>
+<script>
+const MONTHS=['ENERO','FEBRERO','MARZO','ABRIL','MAYO','JUNIO','JULIO','AGOSTO','SEPTIEMBRE','OCTUBRE','NOVIEMBRE','DICIEMBRE'];
+const DAYS=['L','M','X','J','V','S','D'];
+const now=new Date(),y=now.getFullYear(),m=now.getMonth(),d=now.getDate();
+document.getElementById('m').textContent=`${MONTHS[m]} ${y}`;
+const g=document.getElementById('g');
+DAYS.forEach(d=>{const e=document.createElement('div');e.className='dh';e.textContent=d;g.append(e)});
+let first=new Date(y,m,1).getDay();first=(first+6)%7;
+for(let i=0;i<first;i++){const e=document.createElement('div');g.append(e)}
+const last=new Date(y,m+1,0).getDate();
+for(let i=1;i<=last;i++){
+  const e=document.createElement('div');
+  if(i===d)e.className='t';
+  else if(i<d)e.className='d';
+  else e.className='w';
+  e.textContent=i;g.append(e);
+}
+</script></body></html>

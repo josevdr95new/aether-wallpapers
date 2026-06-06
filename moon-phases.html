@@ -1,0 +1,33 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Moon Phases</title>
+<style>html,body{margin:0;height:100%;overflow:hidden;background:linear-gradient(180deg,#0a0a1a,#1a1a3a);
+color:#fff;font-family:'Segoe UI';display:flex;align-items:center;justify-content:center;flex-direction:column;gap:20px}
+.m{width:280px;height:280px;border-radius:50%;position:relative;overflow:hidden;
+background:radial-gradient(circle at 30% 30%,#ddd,#888);box-shadow:0 0 60px rgba(255,255,255,.15)}
+.s{position:absolute;top:0;left:0;height:100%;background:#0a0a1a;transition:width .5s}
+.phase{font-size:18px;letter-spacing:4px;color:#9ca3af}
+</style></head><body>
+<div class="m"><div class="s" id="s"></div></div>
+<div class="phase" id="p">NUEVA</div>
+<script>
+const phases=['NUEVA','CRECIENTE','CUARTO CRECIENTE','GIBOSA CRECIENTE','LLENA',
+'GIBOSA MENGUANTE','CUARTO MENGUANTE','MENGUANTE'];
+let day=0,last=0;
+function loop(n){
+  if(n-last<2000){requestAnimationFrame(loop);return}last=n;
+  day=(day+1)%30;
+  const phase=Math.floor((day/30)*8)%8;
+  document.getElementById('p').textContent=phases[phase];
+  let shadow;
+  if(phase===0)shadow='100%';
+  else if(phase===1)shadow='88%';
+  else if(phase===2)shadow='50%';
+  else if(phase===3)shadow='12%';
+  else if(phase===4)shadow='0%';
+  else if(phase===5)shadow='12%';
+  else if(phase===6)shadow='50%';
+  else shadow='88%';
+  document.getElementById('s').style.width=shadow;
+  requestAnimationFrame(loop);
+}
+requestAnimationFrame(loop);
+</script></body></html>

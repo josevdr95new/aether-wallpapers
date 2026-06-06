@@ -1,0 +1,39 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Ocean Waves</title>
+<style>html,body{margin:0;height:100%;overflow:hidden;background:linear-gradient(180deg,#0a2a3a,#000010)}
+canvas{display:block;width:100%;height:100%}
+</style></head><body>
+<canvas id="c"></canvas>
+<script>
+const c=document.getElementById('c'),x=c.getContext('2d');
+let w,h,last=0;
+function rs(){w=c.width=innerWidth;h=c.height=innerHeight}
+addEventListener('resize',rs);rs();
+let t=0;
+function loop(n){
+  if(n-last<32){requestAnimationFrame(loop);return}last=n;t+=.016;
+  const gr=x.createLinearGradient(0,0,0,h);
+  gr.addColorStop(0,'#0a2a3a');gr.addColorStop(.5,'#0a4060');gr.addColorStop(1,'#0a1a3a');
+  x.fillStyle=gr;x.fillRect(0,0,w,h);
+  x.fillStyle='rgba(255,200,100,.6)';
+  x.beginPath();x.arc(w*.7,80,30,0,Math.PI*2);x.fill();
+  for(let i=0;i<3;i++){
+    const base=h*.4+i*60;
+    x.beginPath();x.moveTo(0,base);
+    for(let px=0;px<=w;px+=10){
+      const py=base+Math.sin(px*.02+t*2+i)*15+Math.sin(px*.05+t*3+i)*8;
+      x.lineTo(px,py);
+    }
+    x.lineTo(w,h);x.lineTo(0,h);x.fill();
+    const alpha=.3-i*.1;
+    x.fillStyle=`rgba(${80+i*30},${150+i*30},200,${alpha})`;
+  }
+  for(let i=0;i<30;i++){
+    const px=(i*40+t*30)%w;
+    const py=h-15+Math.sin(t+i)*2;
+    x.fillStyle='rgba(255,255,255,.6)';
+    x.fillRect(px,py,8,2);
+  }
+  requestAnimationFrame(loop);
+}
+requestAnimationFrame(loop);
+</script></body></html>

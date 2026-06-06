@@ -1,0 +1,35 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8"><title>DNA Helix</title>
+<style>html,body{margin:0;height:100%;overflow:hidden;background:#000}
+canvas{display:block;width:100%;height:100%}
+</style></head><body>
+<canvas id="c"></canvas>
+<script>
+const c=document.getElementById('c'),x=c.getContext('2d');
+let w,h,last=0;
+function rs(){w=c.width=innerWidth;h=c.height=innerHeight}
+addEventListener('resize',rs);rs();
+let t=0;
+function loop(n){
+  if(n-last<32){requestAnimationFrame(loop);return}last=n;t+=.016;
+  x.fillStyle='rgba(0,0,0,.15)';x.fillRect(0,0,w,h);
+  const cx=w/2,A=Math.min(w*.25,200);
+  for(let y=0;y<h;y+=8){
+    const phase=y*.02+t;
+    const x1=cx+Math.sin(phase)*A,y1=y;
+    const x2=cx-Math.sin(phase)*A,y2=y;
+    const sz1=6+Math.sin(phase)*3,sz2=6-Math.sin(phase)*3;
+    const depth=(Math.cos(phase)+1)/2;
+    x.fillStyle=`rgba(91,179,255,${.6+depth*.4})`;
+    x.beginPath();x.arc(x1,y1,sz1,0,Math.PI*2);x.fill();
+    x.fillStyle=`rgba(255,122,217,${.6+(1-depth)*.4})`;
+    x.beginPath();x.arc(x2,y2,sz2,0,Math.PI*2);x.fill();
+    if(y%32===0){
+      x.strokeStyle=`rgba(255,255,255,${.3+depth*.3})`;
+      x.lineWidth=2;
+      x.beginPath();x.moveTo(x1,y1);x.lineTo(x2,y2);x.stroke();
+    }
+  }
+  requestAnimationFrame(loop);
+}
+requestAnimationFrame(loop);
+</script></body></html>

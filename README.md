@@ -2,7 +2,11 @@
 
 Repositorio **oficial** de fondos animados HTML/CSS/JS para la app **Aether**. Se publica vía **GitHub Pages** y la app lo consume como catálogo remoto **fijo** (la URL es `https://josevdr95new.github.io/aether-wallpapers/index.json` y no se puede cambiar desde la UI).
 
+> **Catálogo actual:** 5 wallpapers (clock, aurora, synthwave, nebula, liquid). La app adicionalmente incluye 5 wallpapers built-in (plasma, starfield, particles, matrix, waves) que NO están en este repo — son los que se bundleán con la app. **No duplicar**: este repo es para wallpapers **nuevos** distintos a los built-ins.
+
 Official animated HTML/CSS/JS wallpapers repository for the **Aether** app. Published via **GitHub Pages** and consumed by the app as a **fixed** remote catalog (URL is `https://josevdr95new.github.io/aether-wallpapers/index.json` and cannot be changed from the UI).
+
+> **Current catalog:** 5 wallpapers (clock, aurora, synthwave, nebula, liquid). The app additionally bundles 5 built-in wallpapers (plasma, starfield, particles, matrix, waves) that are NOT in this repo. **No duplicates**: this repo is for **new** wallpapers distinct from the built-ins.
 
 ---
 
@@ -82,6 +86,7 @@ aether-wallpapers/
 - **Ligero**: apunta a <20 KB sin comprimir.
 - **Fullscreen**: usa `100vw` / `100vh` (o `position:fixed; inset:0`). El wallpaper se renderiza a pantalla completa.
 - **No autoplay de audio**: los wallpapers son silenciosos.
+- **No duplicados**: no subir wallpapers que ya están como built-ins en la app (plasma, starfield, particles, matrix, waves). Tampoco duplicar los que ya están en este repo (clock, aurora, synthwave, nebula, liquid). Este repo es para wallpapers **nuevos**.
 
 ### Convenciones recomendadas
 

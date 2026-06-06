@@ -1,0 +1,55 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8"><title>8-bit City</title>
+<style>html,body{margin:0;height:100%;overflow:hidden;background:#0a0a2a}
+canvas{display:block;width:100%;height:100%;image-rendering:pixelated}
+</style></head><body>
+<canvas id="c"></canvas>
+<script>
+const c=document.getElementById('c'),x=c.getContext('2d');
+let w,h,last=0;
+const buildings=[];
+const windows=[];
+function rs(){
+  w=c.width=innerWidth;h=c.height=innerHeight;
+  buildings.length=0;windows.length=0;
+  let xb=0;
+  while(xb<w+200){
+    const bw=40+Math.random()*60,bh=80+Math.random()*h*.5;
+    buildings.push({x:xb,y:h-bh,w:bw,h:bh,c:`hsl(${220+Math.random()*30},40%,${15+Math.random()*15}%)`});
+    const cols=Math.floor(bw/12),rows=Math.floor(bh/14);
+    for(let i=0;i<cols;i++)for(let j=0;j<rows;j++)if(Math.random()<.6)
+      windows.push({bx:xb,y:h-bh,j,i,on:Math.random()<.5,t:Math.random()*30});
+    xb+=bw+2;
+  }
+}
+addEventListener('resize',rs);rs();
+let off=0;
+function loop(n){
+  if(n-last<32){requestAnimationFrame(loop);return}last=n;
+  off=(off+1.2)%40;
+  x.fillStyle='#0a0a2a';x.fillRect(0,0,w,h);
+  const gr=x.createLinearGradient(0,0,0,h);
+  gr.addColorStop(0,'#3a1a5a');gr.addColorStop(.7,'#0a0a2a');gr.addColorStop(1,'#1a0a3a');
+  x.fillStyle=gr;x.fillRect(0,0,w,h);
+  for(let i=0;i<40;i++){
+    const sx=(i*73+off*2)%w;
+    x.fillStyle=`rgba(255,255,255,${.3+Math.sin(i+t)*.2})`;
+    x.fillRect(sx,(i*37)%(h*.5),2,2);
+  }
+  buildings.forEach(b=>{x.fillStyle=b.c;x.fillRect(b.x,b.y,b.w,b.h)});
+  windows.forEach(wn=>{
+    const b=buildings[wn.bx]||buildings[0];
+    const wx=b.x+wn.i*12,wy=b.y+wn.j*14;
+    if(wn.t<25)wn.on=Math.random()<.5;
+    wn.t++;
+    x.fillStyle=wn.on?`hsl(${40+Math.random()*20},100%,${60+Math.random()*30}%)`:'#0a0a0a';
+    x.fillRect(wx+2,wy+2,6,8);
+  });
+  x.fillStyle='#000';x.fillRect(0,h-30,w,30);
+  requestAnimationFrame(loop);
+}
+let t=0;
+const origLoop=loop;
+function loop2(n){t+=.016;origLoop(n)}
+loop=loop2;
+requestAnimationFrame(loop);
+</script></body></html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Win95 Desktop</title>
+<style>html,body{margin:0;height:100%;overflow:hidden;background:#008080;
+font-family:'MS Sans Serif','Tahoma',sans-serif}
+.desktop{padding:10px;display:flex;flex-direction:column;align-items:center;gap:6px}
+.icon{width:80px;text-align:center;color:#fff;text-shadow:1px 1px 0 #000;cursor:default;font-size:11px}
+.icon div{font-size:32px;margin-bottom:2px}
+.taskbar{position:fixed;bottom:0;left:0;right:0;height:28px;background:#c0c0c0;
+border-top:2px solid #fff;display:flex;align-items:center;padding:2px 4px;gap:4px}
+.start{background:#c0c0c0;border:2px outset #fff;font-weight:bold;padding:2px 8px;font-size:11px}
+.clock{margin-left:auto;font-size:11px;border:1px inset #888;padding:2px 6px;background:#c0c0c0}
+.win{position:absolute;top:30%;left:30%;width:300px;height:180px;background:#c0c0c0;
+border:2px outset #fff;padding:2px;box-shadow:2px 2px 0 rgba(0,0,0,.3)}
+.wtitle{background:linear-gradient(90deg,#000080,#1084d0);color:#fff;padding:2px 4px;
+font-size:11px;font-weight:bold;display:flex;justify-content:space-between}
+.wbody{padding:10px;font-size:11px;background:#c0c0c0;height:calc(100% - 22px)}
+</style></head><body>
+<div class="desktop">
+  <div class="icon"><div>💻</div>Mi PC</div>
+  <div class="icon"><div>📁</div>Documentos</div>
+  <div class="icon"><div>🗑️</div>Papelera</div>
+</div>
+<div class="win"><div class="wtitle"><span>Aether.scr</span><span>×</span></div>
+<div class="wbody">Bienvenido a Windows 95<br><br>Reproduciendo: Aether.scr<br><br><a href="#" style="color:#000">Salir</a></div></div>
+<div class="taskbar">
+  <div class="start">⊞ Inicio</div>
+  <div class="start">Aether.scr</div>
+  <div class="clock" id="c">12:00</div>
+</div>
+<script>
+const c=document.getElementById('c');let last=0;
+function loop(n){
+  if(n-last<1000){requestAnimationFrame(loop);return}last=n;
+  const d=new Date();
+  c.textContent=d.getHours().toString().padStart(2,'0')+':'+d.getMinutes().toString().padStart(2,'0');
+  requestAnimationFrame(loop);
+}
+requestAnimationFrame(loop);
+</script></body></html>

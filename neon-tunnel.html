@@ -1,0 +1,35 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Neon Tunnel</title>
+<style>html,body{margin:0;height:100%;overflow:hidden;background:#000}
+canvas{display:block;width:100%;height:100%}
+</style></head><body>
+<canvas id="c"></canvas>
+<script>
+const c=document.getElementById('c'),x=c.getContext('2d');
+let w,h,last=0;
+const N=80;
+const tunnel=Array.from({length:N},(_,i)=>({z:1-(i/N),rot:i*.1,c:`hsl(${i*4+200},100%,50%)`}));
+function rs(){w=c.width=innerWidth;h=c.height=innerHeight}
+addEventListener('resize',rs);rs();
+let t=0;
+function loop(n){
+  if(n-last<32){requestAnimationFrame(loop);return}last=n;t+=.02;
+  x.fillStyle='rgba(0,0,0,.25)';x.fillRect(0,0,w,h);
+  const cx=w/2,cy=h/2;
+  tunnel.forEach(s=>{
+    s.z-=.005;if(s.z<0)s.z=1;
+    const sz=1/s.z;
+    const sides=6;
+    for(let i=0;i<sides;i++){
+      const a=s.rot+t*sz+i*Math.PI*2/sides;
+      const r=sz*150;
+      const px=cx+Math.cos(a)*r,py=cy+Math.sin(a)*r;
+      const px2=cx+Math.cos(a+Math.PI*2/sides)*r,py2=cy+Math.sin(a+Math.PI*2/sides)*r;
+      x.strokeStyle=`hsla(${s.z*360+200},100%,50%,${1-s.z})`;
+      x.lineWidth=2*(1-s.z)+1;
+      x.beginPath();x.moveTo(px,py);x.lineTo(px2,py2);x.stroke();
+    }
+  });
+  requestAnimationFrame(loop);
+}
+requestAnimationFrame(loop);
+</script></body></html>

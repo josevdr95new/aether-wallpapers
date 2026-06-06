@@ -1,0 +1,44 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8"><title>System Monitor</title>
+<style>html,body{margin:0;height:100%;overflow:hidden;background:#0a0e1a;color:#fff;
+font-family:'Segoe UI',monospace;display:flex;align-items:center;justify-content:center}
+.b{display:flex;flex-direction:column;gap:18px;padding:40px;width:min(560px,80vw)}
+.r{display:flex;align-items:center;gap:14px}
+.l{width:50px;font-size:13px;color:#9ca3af;text-align:right}
+.b2{flex:1;height:14px;background:#1a1f2e;border-radius:7px;overflow:hidden;position:relative}
+.f{height:100%;border-radius:7px;background:linear-gradient(90deg,#5eb3ff,#9b6bff);
+transition:width .3s}
+.p{position:absolute;right:10px;top:0;font-size:11px;line-height:14px;color:#fff;font-weight:bold}
+.t{position:absolute;top:24px;left:50%;transform:translateX(-50%);font-size:11px;color:#666}
+</style></head><body>
+<div class="b" id="b"></div>
+<div class="t">SYSTEM MONITOR · simulated</div>
+<script>
+const data=[
+  {l:'CPU',c:'#5eb3ff',v:0},{l:'GPU',c:'#9b6bff',v:0},
+  {l:'RAM',c:'#4ade80',v:0},{l:'DISK',c:'#fbbf24',v:0},
+  {l:'NET',c:'#ff7ad9',v:0}
+];
+const b=document.getElementById('b');
+data.forEach(d=>{
+  const r=document.createElement('div');r.className='r';
+  const l=document.createElement('div');l.className='l';l.textContent=d.l;
+  const b2=document.createElement('div');b2.className='b2';
+  const f=document.createElement('div');f.className='f';
+  const p=document.createElement('div');p.className='p';
+  f.style.background=`linear-gradient(90deg,${d.c},${d.c}aa)`;
+  b2.append(f,p);r.append(l,b2);b.append(r);
+  d.f=f;d.p=p;
+});
+let t=0,last=0;
+function loop(n){
+  if(n-last<32){requestAnimationFrame(loop);return}last=n;
+  t+=0.016;
+  data.forEach((d,i)=>{
+    const v=Math.abs(Math.sin(t*0.3+i*1.7)*40+Math.sin(t*0.7+i)*30+30);
+    d.f.style.width=v+'%';
+    d.p.textContent=Math.round(v)+'%';
+  });
+  requestAnimationFrame(loop);
+}
+requestAnimationFrame(loop);
+</script></body></html>

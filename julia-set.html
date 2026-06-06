@@ -1,0 +1,28 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Julia Set</title>
+<style>html,body{margin:0;height:100%;overflow:hidden;background:#000}
+canvas{display:block;width:100%;height:100%}
+</style></head><body>
+<canvas id="c"></canvas>
+<script>
+const c=document.getElementById('c'),x=c.getContext('2d');
+let w,h,last=0;
+function rs(){w=c.width=innerWidth;h=c.height=innerHeight}
+addEventListener('resize',rs);rs();
+let t=0;
+const MAX=30;
+function loop(n){
+  if(n-last<200){requestAnimationFrame(loop);return}last=n;t+=.01;
+  const cx=Math.cos(t)*.8,cy=Math.sin(t*.7)*.5;
+  const img=x.createImageData(w,h),d=img.data;
+  for(let y=0;y<h;y++)for(let i=0;i<w;i++){
+    let zx=(i-w/2)/(h/3),zy=(y-h/2)/(h/3),it=0;
+    while(zx*zx+zy*zy<4&&it<MAX){const t2=zx*zx-zy*zy+cx;zy=2*zx*zy+cy;zx=t2;it++}
+    const idx=(y*w+i)*4;
+    if(it===MAX){d[idx]=0;d[idx+1]=0;d[idx+2]=0;d[idx+3]=255}
+    else{d[idx]=(it*11)%255;d[idx+1]=(it*7+80)%255;d[idx+2]=(it*13+150)%255;d[idx+3]=255}
+  }
+  x.putImageData(img,0,0);
+  requestAnimationFrame(loop);
+}
+requestAnimationFrame(loop);
+</script></body></html>

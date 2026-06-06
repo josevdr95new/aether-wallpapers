@@ -1,0 +1,31 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Spirograph</title>
+<style>html,body{margin:0;height:100%;overflow:hidden;background:#000}
+canvas{display:block;width:100%;height:100%}
+</style></head><body>
+<canvas id="c"></canvas>
+<script>
+const c=document.getElementById('c'),x=c.getContext('2d');
+let w,h,last=0;
+function rs(){w=c.width=innerWidth;h=c.height=innerHeight}
+addEventListener('resize',rs);rs();
+let t=0,lastT=0;
+function loop(n){
+  if(n-last<32){requestAnimationFrame(loop);return}last=n;t+=.016;
+  x.fillStyle='rgba(0,0,0,.04)';x.fillRect(0,0,w,h);
+  const cx=w/2,cy=h/2;
+  const R=Math.min(w,h)*.35,r=R*.4,k=r/R*4;
+  for(let i=0;i<3;i++){
+    const a=t*(i+1)*.5;
+    const px=cx+(R-r)*Math.cos(a)+r*Math.cos((R-r)/r*a);
+    const py=cy+(R-r)*Math.sin(a)-r*Math.sin((R-r)/r*a);
+    if(i===0){x.beginPath();x.moveTo(px,py)}
+    else{
+      x.strokeStyle=`hsl(${(i*120+t*30)%360},80%,60%)`;x.lineWidth=1;
+      x.lineTo(px,py);x.stroke();
+      x.beginPath();x.moveTo(px,py);
+    }
+  }
+  requestAnimationFrame(loop);
+}
+requestAnimationFrame(loop);
+</script></body></html>

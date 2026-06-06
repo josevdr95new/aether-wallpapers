@@ -1,0 +1,37 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Countdown</title>
+<style>html,body{margin:0;height:100%;overflow:hidden;background:radial-gradient(circle at 50% 30%,#1a0a2a,#0a0a14);
+color:#fff;font-family:'Segoe UI';display:flex;align-items:center;justify-content:center;flex-direction:column}
+.lbl{font-size:14px;letter-spacing:6px;color:#9ca3af;margin-bottom:30px}
+.c{display:flex;gap:24px}
+.b{background:rgba(255,255,255,.05);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.1);
+border-radius:16px;padding:24px 18px;min-width:90px;text-align:center}
+.n{font-size:56px;font-weight:200;line-height:1;background:linear-gradient(135deg,#5eb3ff,#ff7ad9);
+-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-variant-numeric:tabular-nums}
+.u{font-size:10px;color:#6b7280;letter-spacing:2px;margin-top:8px}
+</style></head><body>
+<div class="lbl" id="l">CUENTA ATRÁS · 2027</div>
+<div class="c">
+  <div class="b"><div class="n" id="d">000</div><div class="u">DÍAS</div></div>
+  <div class="b"><div class="n" id="h">00</div><div class="u">HORAS</div></div>
+  <div class="b"><div class="n" id="m">00</div><div class="u">MIN</div></div>
+  <div class="b"><div class="n" id="s">00</div><div class="u">SEG</div></div>
+</div>
+<script>
+const target=new Date('2027-01-01T00:00:00').getTime();
+let last=0;
+function pad(n,l=2){return String(n).padStart(l,'0')}
+function loop(n){
+  if(n-last<1000){requestAnimationFrame(loop);return}last=n;
+  const diff=Math.max(0,target-Date.now());
+  const d=Math.floor(diff/86400000);
+  const h=Math.floor(diff%86400000/3600000);
+  const m=Math.floor(diff%3600000/60000);
+  const s=Math.floor(diff%60000/1000);
+  document.getElementById('d').textContent=pad(d,3);
+  document.getElementById('h').textContent=pad(h);
+  document.getElementById('m').textContent=pad(m);
+  document.getElementById('s').textContent=pad(s);
+  requestAnimationFrame(loop);
+}
+requestAnimationFrame(loop);
+</script></body></html>

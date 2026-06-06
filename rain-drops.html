@@ -1,0 +1,27 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Rain Drops</title>
+<style>html,body{margin:0;height:100%;overflow:hidden;background:linear-gradient(180deg,#1a2030,#0a1018)}
+canvas{display:block;width:100%;height:100%}
+</style></head><body>
+<canvas id="c"></canvas>
+<script>
+const c=document.getElementById('c'),x=c.getContext('2d');
+let w,h,last=0;
+const drops=Array.from({length:200},()=>({x:Math.random()*w,y:Math.random()*h,v:4+Math.random()*8,l:Math.random()*30,r:2+Math.random()*4}));
+function rs(){w=c.width=innerWidth;h=c.height=innerHeight}
+addEventListener('resize',rs);rs();
+function loop(n){
+  if(n-last<32){requestAnimationFrame(loop);return}last=n;
+  x.fillStyle='rgba(20,25,40,.4)';x.fillRect(0,0,w,h);
+  drops.forEach(d=>{
+    d.y+=d.v;if(d.y>h){d.y=-20;d.x=Math.random()*w}
+    const gr=x.createLinearGradient(d.x,d.y,d.x-2,d.y-d.l);
+    gr.addColorStop(0,`rgba(180,210,255,.5)`);gr.addColorStop(1,'transparent');
+    x.strokeStyle=gr;x.lineWidth=d.r/2;
+    x.beginPath();x.moveTo(d.x,d.y);x.lineTo(d.x-2,d.y-d.l);x.stroke();
+    x.fillStyle=`rgba(180,210,255,.6)`;
+    x.beginPath();x.arc(d.x,d.y,d.r,0,Math.PI*2);x.fill();
+  });
+  requestAnimationFrame(loop);
+}
+requestAnimationFrame(loop);
+</script></body></html>
