@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html><head><meta charset="UTF-8"><title>Liquid</title>
+<style>html,body{margin:0;height:100%;overflow:hidden;background:#000}</style>
+</head><body>
+<canvas id="c"></canvas>
+<script>
+const c=document.getElementById('c'),x=c.getContext('2d');
+let W,H;
+function resize(){W=c.width=innerWidth;H=c.height=innerHeight}
+addEventListener('resize',resize);resize();
+
+const blobs=[];
+const colors=[
+  ['#ff006e','#8338ec'],['#3a86ff','#06ffa5'],['#ffbe0b','#fb5607'],
+  ['#9b5de5','#f15bb5'],['#00bbf9','#00f5d4'],['#fee440','#f15bb5']
+];
+for(let i=0;i<colors.length;i++){
+  blobs.push({
+    x:Math.random()*W,y:Math.random()*H,
+    r:Math.min(W,H)*(.15+Math.random()*.1),
+    c:colors[i],
+    vx:(Math.random()-.5)*.6,vy:(Math.random()-.5)*.6,
+    t:Math.random()*Math.PI*2
+  });
+}
+
+function frame(time){
+  // fondo con leve rastro para sensación de tinta
+  x.fillStyle='rgba(0,0,0,.18)';
+  x.fillRect(0,0,W,H);
+
+  x.globalCompositeOperation='screen';
+  for(const b of blobs){
+    b.x+=b.vx;b.y+=b.vy;b.t+=.012;
+    if(b.x<-b.r)b.x=W+b.r;else if(b.x>W+b.r)b.x=-b.r;
+    if(b.y<-b.r)b.y=H+b.r;else if(b.y>H+b.r)b.y=-b.r;
+    const wob=1+Math.sin(b.t)*.1;
+    const g=x.createRadialGradient(b.x,b.y,0,b.x,b.y,b.r*wob);
+    g.addColorStop(0,b.c[0]);g.addColorStop(.5,b.c[1]);g.addColorStop(1,'rgba(0,0,0,0)');
+    x.fillStyle=g;x.beginPath();x.arc(b.x,b.y,b.r*wob,0,Math.PI*2);x.fill();
+  }
+  x.globalCompositeOperation='source-over';
+
+  requestAnimationFrame(frame);
+}
+requestAnimationFrame(frame);
+</script>
+</body></html>

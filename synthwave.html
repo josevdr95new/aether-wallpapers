@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html><head><meta charset="UTF-8"><title>Synthwave</title>
+<style>html,body{margin:0;height:100%;overflow:hidden;background:#1a0030}</style>
+</head><body>
+<canvas id="c"></canvas>
+<script>
+const c=document.getElementById('c'),x=c.getContext('2d');
+let W,H;
+function resize(){W=c.width=innerWidth;H=c.height=innerHeight}
+addEventListener('resize',resize);resize();
+
+const sunGrad=()=>{
+  const g=x.createLinearGradient(0,H*.25,0,H*.55);
+  g.addColorStop(0,'#fff200');
+  g.addColorStop(.3,'#ff6b35');
+  g.addColorStop(.6,'#ff2d92');
+  g.addColorStop(1,'#7928ca');
+  return g;
+};
+
+function frame(t){
+  // cielo
+  const sky=x.createLinearGradient(0,0,0,H*.7);
+  sky.addColorStop(0,'#1a0030');
+  sky.addColorStop(.5,'#3d1066');
+  sky.addColorStop(1,'#7928ca');
+  x.fillStyle=sky;x.fillRect(0,0,W,H*.7);
+
+  // sol
+  const sx=W/2,sy=H*.4,sr=Math.min(W,H)*.18;
+  x.save();
+  x.beginPath();x.arc(sx,sy,sr,0,Math.PI*2);x.clip();
+  x.fillStyle=sunGrad();x.fillRect(sx-sr,sy-sr,sr*2,sr*2);
+  // bandas horizontales del sol
+  x.globalCompositeOperation='destination-out';
+  for(let i=0;i<6;i++){
+    const bh=sr*(.05+i*.04),by=sy+i*sr*.13;
+    x.fillStyle=`rgba(0,0,0,${.4+i*.1})`;
+    x.fillRect(sx-sr,by,sr*2,bh);
+  }
+  x.globalCompositeOperation='source-over';
+  x.restore();
+
+  // estrellas fugaces
+  for(let i=0;i<30;i++){
+    const px=(i*97+t*.02)%W;
+    const py=(i*53)%(H*.4);
+    const a=.3+Math.sin(t*.003+i)*.4;
+    x.fillStyle=`rgba(255,255,255,${a})`;
+    x.fillRect(px,py,1.5,1.5);
+  }
+
+  // suelo (perspectiva)
+  const gy=H*.7;
+  x.fillStyle='#0a0014';x.fillRect(0,gy,W,H-gy);
+  // línea horizonte con glow
+  x.strokeStyle='rgba(255,42,146,.9)';x.lineWidth=2;
+  x.shadowColor='#ff2a92';x.shadowBlur=18;
+  x.beginPath();x.moveTo(0,gy);x.lineTo(W,gy);x.stroke();
+  x.shadowBlur=0;
+
+  // grid perspectiva
+  const camY=gy;
+  const fov=400;
+  const speed=t*.0004;
+  // líneas verticales
+  x.strokeStyle='rgba(255,42,146,.7)';x.lineWidth=1.2;
+  for(let i=-10;i<=10;i++){
+    const x0=sx+i*(W/20);
+    x.beginPath();x.moveTo(x0,gy);x.lineTo(sx+i*200,H);x.stroke();
+  }
+  // líneas horizontales (en movimiento)
+  for(let j=0;j<20;j++){
+    const v=((j+speed*8)%1);
+    const z=1-v; // 1 = cerca, 0 = lejos
+    const py=camY+(H-camY)*Math.pow(v,2.2);
+    const alpha=.15+z*.6;
+    x.strokeStyle=`rgba(255,42,146,${alpha})`;x.lineWidth=1+z*1.2;
+    x.beginPath();x.moveTo(0,py);x.lineTo(W,py);x.stroke();
+  }
+
+  requestAnimationFrame(frame);
+}
+requestAnimationFrame(frame);
+</script>
+</body></html>

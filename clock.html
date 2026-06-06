@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Reloj — Aether</title>
+<style>
+  :root{
+    --accent:#5eb3ff;--accent2:#9b6bff;--accent3:#ff6bc1;
+    --ink:rgba(255,255,255,.96);--ink2:rgba(255,255,255,.7);--ink3:rgba(255,255,255,.45);
+    --glass:rgba(255,255,255,.05);--glass-border:rgba(255,255,255,.1);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%;overflow:hidden;background:#04050f;color:var(--ink);
+    font-family:'Segoe UI Variable','Segoe UI',system-ui,sans-serif;font-feature-settings:"tnum"}
+
+  /* Fondo: blobs animados + grano sutil */
+  .blob{position:fixed;border-radius:50%;filter:blur(110px);opacity:.55;mix-blend-mode:screen;z-index:0;will-change:transform}
+  .b1{width:60vw;height:60vw;background:radial-gradient(circle,#1e3a8a,transparent 60%);top:-15%;left:-10%;animation:drift1 22s ease-in-out infinite}
+  .b2{width:55vw;height:55vw;background:radial-gradient(circle,#6d28d9,transparent 60%);bottom:-20%;right:-10%;animation:drift2 28s ease-in-out infinite}
+  .b3{width:45vw;height:45vw;background:radial-gradient(circle,#0e7490,transparent 60%);top:30%;left:40%;animation:drift3 26s ease-in-out infinite}
+  .b4{width:35vw;height:35vw;background:radial-gradient(circle,#db2777,transparent 60%);top:60%;left:5%;animation:drift4 32s ease-in-out infinite}
+  @keyframes drift1{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(10vw,5vh) scale(1.15)}}
+  @keyframes drift2{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-8vw,-6vh) scale(1.1)}}
+  @keyframes drift3{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(6vw,8vh) scale(.9)}}
+  @keyframes drift4{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(5vw,-7vh) scale(1.2)}}
+  .grain{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.04;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence baseFrequency='.9'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
+
+  .wrap{position:relative;z-index:2;height:100vh;display:grid;grid-template-rows:auto 1fr auto;padding:5vh 6vw;gap:3vh}
+
+  .top{display:flex;justify-content:space-between;align-items:flex-start}
+  .greet{font-size:2.1vh;font-weight:400;letter-spacing:.08em;text-transform:uppercase;opacity:.8}
+  .greet b{font-weight:600;color:#fff;background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+  .battery{font-size:1.5vh;color:var(--ink2);text-align:right;line-height:1.4;display:flex;align-items:center;gap:.8em}
+  .battery .bar{width:7em;height:.55em;background:rgba(255,255,255,.1);border-radius:1em;overflow:hidden;border:1px solid rgba(255,255,255,.1)}
+  .battery .bar i{display:block;height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:1em;transition:width .6s}
+  .battery .pct{font-variant-numeric:tabular-nums;font-weight:500;color:#fff;min-width:3.5em;text-align:right}
+
+  .center{display:flex;flex-direction:column;justify-content:center;align-items:flex-start;gap:1vh}
+  .time{display:flex;align-items:baseline;gap:.7vw;font-variant-numeric:tabular-nums}
+  .time .hm{font-size:23vh;font-weight:200;line-height:.9;letter-spacing:-.04em;
+    background:linear-gradient(180deg,#fff 30%,#a8c4ff 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;
+    filter:drop-shadow(0 0 50px rgba(94,179,255,.25))}
+  .time .colon{font-size:23vh;font-weight:200;line-height:.9;color:rgba(255,255,255,.18);-webkit-text-fill-color:rgba(255,255,255,.18);transform:translateY(-2vh);animation:blink 2s ease-in-out infinite}
+  .time .sec{font-size:9vh;font-weight:300;color:rgba(255,255,255,.55);-webkit-text-fill-color:rgba(255,255,255,.55);min-width:3ch;text-align:left;letter-spacing:.05em}
+  .time .ampm{font-size:3.5vh;font-weight:500;color:var(--ink2);margin-left:1.2vw;padding:.4em .9em;border-radius:1em;background:rgba(255,255,255,.06);border:1px solid var(--glass-border);backdrop-filter:blur(10px);align-self:center}
+  @keyframes blink{0%,100%{opacity:.18}50%{opacity:.35}}
+
+  .date{font-size:2.8vh;font-weight:300;color:var(--ink2);margin-top:1vh}
+  .date b{color:#fff;font-weight:600;background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+
+  .bottom{display:grid;grid-template-columns:repeat(3,1fr);gap:1.6vw}
+  .card{background:var(--glass);border:1px solid var(--glass-border);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
+    border-radius:1.4vh;padding:1.8vh 2vh;display:flex;flex-direction:column;gap:.6vh;position:relative;overflow:hidden}
+  .card::before{content:"";position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.06),transparent 50%);pointer-events:none}
+  .card .lbl{font-size:1.3vh;text-transform:uppercase;letter-spacing:.18em;color:var(--ink3);font-weight:600}
+  .card .val{font-size:2.4vh;font-weight:500;color:#fff;font-variant-numeric:tabular-nums}
+  .progress{height:.4vh;background:rgba(255,255,255,.08);border-radius:1em;overflow:hidden;margin-top:.3vh}
+  .progress i{display:block;height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:1em;transition:width .8s ease}
+  .card .sm{font-size:1.25vh;color:var(--ink3);margin-top:.2vh}
+</style>
+</head>
+<body>
+  <div class="blob b1"></div>
+  <div class="blob b2"></div>
+  <div class="blob b3"></div>
+  <div class="blob b4"></div>
+  <div class="grain"></div>
+
+  <div class="wrap">
+    <div class="top">
+      <div class="greet" id="greet">Hola, <b>mundo</b></div>
+      <div class="battery" id="battery">
+        <span class="bar"><i id="batBar" style="width:0%"></i></span>
+        <span class="pct" id="batPct">--%</span>
+        <span id="batChg" style="font-size:1.3vh;color:var(--accent)"></span>
+      </div>
+    </div>
+
+    <div class="center">
+      <div class="time">
+        <span class="hm" id="hm">--:--</span>
+        <span class="colon">:</span>
+        <span class="sec" id="ss">--</span>
+        <span class="ampm" id="ap"></span>
+      </div>
+      <div class="date" id="date">—</div>
+    </div>
+
+    <div class="bottom">
+      <div class="card">
+        <div class="lbl">Día</div>
+        <div class="val"><span id="dayPct">0%</span> transcurrido</div>
+        <div class="progress"><i id="dayBar"></i></div>
+        <div class="sm" id="dayHint">—</div>
+      </div>
+      <div class="card">
+        <div class="lbl">Semana</div>
+        <div class="val"><span id="weekDay">—</span></div>
+        <div class="progress"><i id="weekBar"></i></div>
+        <div class="sm" id="weekHint">—</div>
+      </div>
+      <div class="card">
+        <div class="lbl">Año</div>
+        <div class="val"><span id="yearPct">0%</span></div>
+        <div class="progress"><i id="yearBar"></i></div>
+        <div class="sm" id="yearHint">—</div>
+      </div>
+    </div>
+  </div>
+
+<script>
+const $=id=>document.getElementById(id);
+const hm=$('hm'),ss=$('ss'),ap=$('ap'),dateEl=$('date'),greet=$('greet');
+const dayPct=$('dayPct'),dayBar=$('dayBar'),dayHint=$('dayHint');
+const weekDay=$('weekDay'),weekBar=$('weekBar'),weekHint=$('weekHint');
+const yearPct=$('yearPct'),yearBar=$('yearBar'),yearHint=$('yearHint');
+const batBar=$('batBar'),batPct=$('batPct'),batChg=$('batChg');
+
+const pad=n=>String(n).padStart(2,'0');
+const greetFn=h=>h<6?['Buenas noches','descansa pronto']
+  :h<12?['Buenos días','arrancamos con todo']
+  :h<19?['Buenas tardes','sigue así de bien']
+  :['Buenas noches','a punto de cerrar el día'];
+const months=['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+const days=['domingo','lunes','martes','miércoles','jueves','viernes','sábado'];
+const daysShort=['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'];
+
+function tick(){
+  const n=new Date();
+  const H=n.getHours(),M=n.getMinutes(),S=n.getSeconds();
+  hm.textContent=pad(H)+':'+pad(M);
+  ss.textContent=pad(S);
+
+  // 12h con AM/PM
+  const h12=H%12||12;
+  ap.textContent=H<12?'AM':'PM';
+
+  const [g,sub]=greetFn(H);
+  greet.innerHTML=`${g}, <b>${sub}</b>`;
+
+  // Fecha: "Viernes, 5 de junio de 2026"
+  dateEl.innerHTML=`${days[n.getDay()]}, <b>${n.getDate()}</b> de ${months[n.getMonth()]} de ${n.getFullYear()}`;
+
+  // Día
+  const d0=new Date(n);d0.setHours(0,0,0,0);
+  const dayMs=n-d0,dayTot=86400000;
+  const dp=dayMs/dayTot*100;
+  dayPct.textContent=dp.toFixed(0)+'%';
+  dayBar.style.width=dp+'%';
+  const remH=Math.floor((dayTot-dayMs)/3600000);
+  const remM=Math.floor(((dayTot-dayMs)%3600000)/60000);
+  dayHint.textContent=`Faltan ~${remH} h ${remM} min`;
+
+  // Semana
+  const wd=(n.getDay()+6)%7; // Lun=0
+  const wp=((wd*86400000)+dayMs)/(7*86400000)*100;
+  weekDay.textContent=daysShort[wd+1]||'Dom';
+  weekBar.style.width=wp+'%';
+  weekHint.textContent=wp.toFixed(0)+'% de la semana';
+
+  // Año
+  const y=n.getFullYear();
+  const y0=new Date(y,0,1),y1=new Date(y+1,0,1);
+  const yp=(n-y0)/(y1-y0)*100;
+  yearPct.textContent=yp.toFixed(1)+'%';
+  yearBar.style.width=yp+'%';
+  const dY=Math.floor((n-y0)/86400000)+1;
+  const dT=Math.round((y1-y0)/86400000);
+  yearHint.textContent=`Día ${dY} de ${dT} (${dT-dY} restantes)`;
+}
+tick();setInterval(tick,1000);
+
+// Batería
+if(navigator.getBattery){
+  navigator.getBattery().then(b=>{
+    const up=()=>{
+      const p=Math.round(b.level*100);
+      batBar.style.width=p+'%';
+      batPct.textContent=p+'%';
+      batChg.textContent=b.charging?'⚡':'';
+    };
+    up();
+    b.addEventListener('levelchange',up);
+    b.addEventListener('chargingchange',up);
+  });
+}
+</script>
+</body>
+</html>

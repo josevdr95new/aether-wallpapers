@@ -1,0 +1,55 @@
+{
+  "version": 1,
+  "wallpapers": [
+    {
+      "id": "clock",
+      "name": "Reloj dashboard",
+      "author": "aether",
+      "category": "Utility",
+      "date": "2026-06-01",
+      "description": "Hora grande con saludo dinámico, fecha en español, batería, progreso del día/semana/año y blobs animados de fondo.",
+      "file": "clock.html",
+      "color": "#5eb3ff"
+    },
+    {
+      "id": "aurora",
+      "name": "Aurora boreal",
+      "author": "aether",
+      "category": "Naturaleza",
+      "date": "2026-06-02",
+      "description": "Cortinas de luz verde y violeta sobre cielo estrellado, con luna con halo y dos planos de montañas.",
+      "file": "aurora.html",
+      "color": "#4ade80"
+    },
+    {
+      "id": "synthwave",
+      "name": "Synthwave",
+      "author": "aether",
+      "category": "Retro",
+      "date": "2026-06-03",
+      "description": "Sol cortado con degradado 80s, cielo morado al atardecer y rejilla en perspectiva infinita.",
+      "file": "synthwave.html",
+      "color": "#ff2d92"
+    },
+    {
+      "id": "nebula",
+      "name": "Nebulosa",
+      "author": "stardust",
+      "category": "Espacio",
+      "date": "2026-05-20",
+      "description": "Nubes interestelares en colores con mezcla aditiva y cientos de estrellas titilando.",
+      "file": "nebula.html",
+      "color": "#a78bfa"
+    },
+    {
+      "id": "liquid",
+      "name": "Líquido iridiscente",
+      "author": "stardust",
+      "category": "Abstracto",
+      "date": "2026-05-15",
+      "description": "Manchas de color con mezcla aditiva screen que se mueven como tinta sobre fondo oscuro.",
+      "file": "liquid.html",
+      "color": "#06b6d4"
+    }
+  ]
+}

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html><head><meta charset="UTF-8"><title>Nebula</title>
+<style>html,body{margin:0;height:100%;overflow:hidden;background:#000}</style>
+</head><body>
+<canvas id="c"></canvas>
+<script>
+const c=document.getElementById('c'),x=c.getContext('2d');
+let W,H;
+function resize(){W=c.width=innerWidth;H=c.height=innerHeight}
+addEventListener('resize',resize);resize();
+
+const stars=Array.from({length:600},()=>({
+  x:Math.random(),y:Math.random(),z:Math.random(),
+  r:Math.random()*1.4+.2,
+  tw:Math.random()*Math.PI*2
+}));
+
+const clouds=[];
+for(let i=0;i<5;i++){
+  clouds.push({
+    cx:Math.random(),cy:Math.random(),
+    rx:Math.random()*.2+.25,ry:Math.random()*.2+.2,
+    hue:Math.random()*360,
+    hueS:Math.random()*30+10,
+    vx:(Math.random()-.5)*.00005,
+    vy:(Math.random()-.5)*.00005,
+    hueV:Math.random()*.05+.02
+  });
+}
+
+function drawCloud(cx,cy,rx,ry,hue,sat){
+  const px=cx*W,py=cy*H;
+  for(let i=0;i<600;i++){
+    const a=Math.random()*Math.PI*2;
+    const r=Math.pow(Math.random(),.5);
+    const dx=Math.cos(a)*rx*r*W;
+    const dy=Math.sin(a)*ry*r*H;
+    const d=Math.hypot(dx,dy);
+    const a2=Math.max(0,1-d/Math.max(rx*W,ry*H));
+    const h=hue+Math.random()*40-20;
+    const s=sat+Math.random()*10;
+    const l=Math.random()*15+8;
+    const alpha=a2*a2*.6;
+    if(alpha<.01)continue;
+    x.fillStyle=`hsla(${h},${s}%,${l}%,${alpha})`;
+    const sz=Math.random()*2+1;
+    x.fillRect(px+dx,py+dy,sz,sz);
+  }
+}
+
+function frame(t){
+  // fondo casi negro con ligero degradado
+  const g=x.createRadialGradient(W*.5,H*.5,0,W*.5,H*.5,Math.max(W,H)*.7);
+  g.addColorStop(0,'#0a0014');g.addColorStop(1,'#000');
+  x.fillStyle=g;x.fillRect(0,0,W,H);
+
+  // nebulosas
+  x.globalCompositeOperation='lighter';
+  for(const cl of clouds){
+    cl.cx=(cl.cx+cl.vx+1)%1;cl.cy=(cl.cy+cl.vy+1)%1;
+    cl.hue=(cl.hue+cl.hueV)%360;
+    drawCloud(cl.cx,cl.cy,cl.rx,cl.ry,cl.hue,cl.hueS);
+  }
+  x.globalCompositeOperation='source-over';
+
+  // estrellas
+  for(const s of stars){
+    s.tw+=.03;
+    const a=(Math.sin(s.tw)*.4+.6)*(.3+s.z*.7);
+    const sz=s.r*(.5+s.z*.5);
+    const px=s.x*W,py=s.y*H;
+    x.fillStyle=`rgba(${230+s.z*25},${230+s.z*25},255,${a})`;
+    x.beginPath();x.arc(px,py,sz,0,Math.PI*2);x.fill();
+    if(s.z>.7){
+      x.strokeStyle=`rgba(200,220,255,${a*.3})`;
+      x.lineWidth=.5;
+      x.beginPath();x.moveTo(px-sz*3,py);x.lineTo(px+sz*3,py);x.stroke();
+    }
+  }
+
+  requestAnimationFrame(frame);
+}
+requestAnimationFrame(frame);
+</script>
+</body></html>
