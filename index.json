@@ -1,5 +1,5 @@
 {
-  "version": 2,
+  "version": 3,
   "wallpapers": [
     {
       "id": "system-monitor",
@@ -35,17 +35,6 @@
       "co_author": "MiniMax M3"
     },
     {
-      "id": "pomodoro-bar",
-      "name": "Pomodoro Bar",
-      "author": "josevdr95",
-      "category": "Utility",
-      "date": "2026-06-06",
-      "description": "Versión horizontal del temporizador Pomodoro con barra y cronómetro.",
-      "file": "pomodoro-bar.html",
-      "color": "#ff6b35",
-      "co_author": "MiniMax M3"
-    },
-    {
       "id": "calendar-grid",
       "name": "Calendar Grid",
       "author": "josevdr95",
@@ -53,61 +42,6 @@
       "date": "2026-06-06",
       "description": "Calendario mensual con el día actual destacado en azul brillante.",
       "file": "calendar-grid.html",
-      "color": "#5eb3ff",
-      "co_author": "MiniMax M3"
-    },
-    {
-      "id": "todo-list",
-      "name": "Todo List",
-      "author": "josevdr95",
-      "category": "Utility",
-      "date": "2026-06-06",
-      "description": "Lista de tareas animadas que aparecen, se tachan y rotan.",
-      "file": "todo-list.html",
-      "color": "#4ade80",
-      "co_author": "MiniMax M3"
-    },
-    {
-      "id": "quote-rotator",
-      "name": "Quote Rotator",
-      "author": "josevdr95",
-      "category": "Utility",
-      "date": "2026-06-06",
-      "description": "Citas célebres que rotan cada 6 segundos con fundido suave.",
-      "file": "quote-rotator.html",
-      "color": "#a78bfa",
-      "co_author": "MiniMax M3"
-    },
-    {
-      "id": "countdown",
-      "name": "Countdown 2027",
-      "author": "josevdr95",
-      "category": "Utility",
-      "date": "2026-06-06",
-      "description": "Cuenta atrás hasta 2027 con tarjetas glass para días, horas, minutos y segundos.",
-      "file": "countdown.html",
-      "color": "#ff7ad9",
-      "co_author": "MiniMax M3"
-    },
-    {
-      "id": "battery-meter",
-      "name": "Battery Meter",
-      "author": "josevdr95",
-      "category": "Utility",
-      "date": "2026-06-06",
-      "description": "Indicador de batería con porcentaje que cambia de color según el nivel.",
-      "file": "battery-meter.html",
-      "color": "#4ade80",
-      "co_author": "MiniMax M3"
-    },
-    {
-      "id": "network-pulse",
-      "name": "Network Pulse",
-      "author": "josevdr95",
-      "category": "Utility",
-      "date": "2026-06-06",
-      "description": "Nodos conectados con paquetes de datos viajando por la red.",
-      "file": "network-pulse.html",
       "color": "#5eb3ff",
       "co_author": "MiniMax M3"
     },
@@ -134,17 +68,6 @@
       "co_author": "MiniMax M3"
     },
     {
-      "id": "asteroid-belt",
-      "name": "Asteroid Belt",
-      "author": "josevdr95",
-      "category": "Espacio",
-      "date": "2026-06-06",
-      "description": "Cinturón de asteroides rocosos orbitando una estrella naranja.",
-      "file": "asteroid-belt.html",
-      "color": "#ff6b35",
-      "co_author": "MiniMax M3"
-    },
-    {
       "id": "wormhole",
       "name": "Wormhole",
       "author": "josevdr95",
@@ -156,17 +79,6 @@
       "co_author": "MiniMax M3"
     },
     {
-      "id": "binary-stars",
-      "name": "Binary Stars",
-      "author": "josevdr95",
-      "category": "Espacio",
-      "date": "2026-06-06",
-      "description": "Dos estrellas orbitando un centro común con halos de luz.",
-      "file": "binary-stars.html",
-      "color": "#ff7ad9",
-      "co_author": "MiniMax M3"
-    },
-    {
       "id": "black-hole",
       "name": "Black Hole",
       "author": "josevdr95",
@@ -175,50 +87,6 @@
       "description": "Agujero negro con disco de acreción incandescente y horizonte de eventos.",
       "file": "black-hole.html",
       "color": "#ff6b35",
-      "co_author": "MiniMax M3"
-    },
-    {
-      "id": "comet-trail",
-      "name": "Comet Trail",
-      "author": "josevdr95",
-      "category": "Espacio",
-      "date": "2026-06-06",
-      "description": "Cometa cruzando el cielo con cola de partículas que se desvanece.",
-      "file": "comet-trail.html",
-      "color": "#5eb3ff",
-      "co_author": "MiniMax M3"
-    },
-    {
-      "id": "starfield-3d",
-      "name": "Starfield 3D",
-      "author": "josevdr95",
-      "category": "Espacio",
-      "date": "2026-06-06",
-      "description": "400 estrellas con efecto 3D de perspectiva que avanzan hacia la cámara.",
-      "file": "starfield-3d.html",
-      "color": "#ffffff",
-      "co_author": "MiniMax M3"
-    },
-    {
-      "id": "moon-phases",
-      "name": "Moon Phases",
-      "author": "josevdr95",
-      "category": "Espacio",
-      "date": "2026-06-06",
-      "description": "Luna que cicla por las 8 fases con etiqueta iluminada.",
-      "file": "moon-phases.html",
-      "color": "#d1d5db",
-      "co_author": "MiniMax M3"
-    },
-    {
-      "id": "shooting-stars",
-      "name": "Shooting Stars",
-      "author": "josevdr95",
-      "category": "Espacio",
-      "date": "2026-06-06",
-      "description": "Estrellas fugaces cayendo por la pantalla con estelas brillantes.",
-      "file": "shooting-stars.html",
-      "color": "#fbbf24",
       "co_author": "MiniMax M3"
     },
     {
@@ -266,17 +134,6 @@
       "co_author": "MiniMax M3"
     },
     {
-      "id": "retro-rain",
-      "name": "Retro Rain",
-      "author": "josevdr95",
-      "category": "Retro",
-      "date": "2026-06-06",
-      "description": "Lluvia de caracteres katakana en magenta neón estilo Matrix.",
-      "file": "retro-rain.html",
-      "color": "#ff2d92",
-      "co_author": "MiniMax M3"
-    },
-    {
       "id": "neon-tunnel",
       "name": "Neon Tunnel",
       "author": "josevdr95",
@@ -285,39 +142,6 @@
       "description": "Túnel hexagonal infinito hecho de líneas neón multicolor.",
       "file": "neon-tunnel.html",
       "color": "#06b6d4",
-      "co_author": "MiniMax M3"
-    },
-    {
-      "id": "cassette",
-      "name": "Cassette Tape",
-      "author": "josevdr95",
-      "category": "Retro",
-      "date": "2026-06-06",
-      "description": "Casete de audio retro con carretes girando y etiqueta personalizada.",
-      "file": "cassette.html",
-      "color": "#5eb3ff",
-      "co_author": "MiniMax M3"
-    },
-    {
-      "id": "pixel-invaders",
-      "name": "Pixel Invaders",
-      "author": "josevdr95",
-      "category": "Retro",
-      "date": "2026-06-06",
-      "description": "Space Invaders jugable con nave controlada por el ratón.",
-      "file": "pixel-invaders.html",
-      "color": "#4ade80",
-      "co_author": "MiniMax M3"
-    },
-    {
-      "id": "synth-mountains",
-      "name": "Synth Mountains",
-      "author": "josevdr95",
-      "category": "Retro",
-      "date": "2026-06-06",
-      "description": "Montañas con sol cortado y rejilla en perspectiva al estilo synthwave.",
-      "file": "synth-mountains.html",
-      "color": "#ff2d92",
       "co_author": "MiniMax M3"
     },
     {
@@ -365,28 +189,6 @@
       "co_author": "MiniMax M3"
     },
     {
-      "id": "snow-drift",
-      "name": "Snow Drift",
-      "author": "josevdr95",
-      "category": "Naturaleza",
-      "date": "2026-06-06",
-      "description": "Copos de nieve cayendo con viento sutil sobre suelo nevado.",
-      "file": "snow-drift.html",
-      "color": "#d1d5db",
-      "co_author": "MiniMax M3"
-    },
-    {
-      "id": "moss-growth",
-      "name": "Moss Growth",
-      "author": "josevdr95",
-      "category": "Naturaleza",
-      "date": "2026-06-06",
-      "description": "Musgo verde creciendo orgánicamente sobre superficie oscura.",
-      "file": "moss-growth.html",
-      "color": "#22c55e",
-      "co_author": "MiniMax M3"
-    },
-    {
       "id": "lava-flow",
       "name": "Lava Flow",
       "author": "josevdr95",
@@ -431,17 +233,6 @@
       "co_author": "MiniMax M3"
     },
     {
-      "id": "aurora-2",
-      "name": "Aurora Borealis 2",
-      "author": "josevdr95",
-      "category": "Naturaleza",
-      "date": "2026-06-06",
-      "description": "Aurora boreal multicolor con cortinas ondulantes sobre cielo estrellado.",
-      "file": "aurora-2.html",
-      "color": "#4ade80",
-      "co_author": "MiniMax M3"
-    },
-    {
       "id": "kaleidoscope",
       "name": "Kaleidoscope",
       "author": "josevdr95",
@@ -475,17 +266,6 @@
       "co_author": "MiniMax M3"
     },
     {
-      "id": "julia-set",
-      "name": "Julia Set",
-      "author": "josevdr95",
-      "category": "Geometría",
-      "date": "2026-06-06",
-      "description": "Conjunto de Julia con parámetro c variable que deforma la forma.",
-      "file": "julia-set.html",
-      "color": "#a78bfa",
-      "co_author": "MiniMax M3"
-    },
-    {
       "id": "dna-helix",
       "name": "DNA Helix",
       "author": "josevdr95",
@@ -494,61 +274,6 @@
       "description": "Doble hélice de ADN rotando con cadenas azul y rosa conectadas.",
       "file": "dna-helix.html",
       "color": "#5eb3ff",
-      "co_author": "MiniMax M3"
-    },
-    {
-      "id": "sacred-geometry",
-      "name": "Sacred Geometry",
-      "author": "josevdr95",
-      "category": "Geometría",
-      "date": "2026-06-06",
-      "description": "Flor de la vida con 6 círculos y 12 radios rotando lentamente.",
-      "file": "sacred-geometry.html",
-      "color": "#5eb3ff",
-      "co_author": "MiniMax M3"
-    },
-    {
-      "id": "wireframe-cube",
-      "name": "Wireframe Cube",
-      "author": "josevdr95",
-      "category": "Geometría",
-      "date": "2026-06-06",
-      "description": "Cubo wireframe 3D rotando con perspectiva y vértices coloreados.",
-      "file": "wireframe-cube.html",
-      "color": "#5eb3ff",
-      "co_author": "MiniMax M3"
-    },
-    {
-      "id": "hex-grid",
-      "name": "Hex Grid",
-      "author": "josevdr95",
-      "category": "Geometría",
-      "date": "2026-06-06",
-      "description": "Red de hexágonos pulsando con intensidad variable y puntos brillantes.",
-      "file": "hex-grid.html",
-      "color": "#5eb3ff",
-      "co_author": "MiniMax M3"
-    },
-    {
-      "id": "spirograph",
-      "name": "Spirograph",
-      "author": "josevdr95",
-      "category": "Abstracto",
-      "date": "2026-06-06",
-      "description": "Patrones espirógrafo con 3 capas de ondas entrelazadas.",
-      "file": "spirograph.html",
-      "color": "#9b6bff",
-      "co_author": "MiniMax M3"
-    },
-    {
-      "id": "fractal-tree",
-      "name": "Fractal Tree",
-      "author": "josevdr95",
-      "category": "Abstracto",
-      "date": "2026-06-06",
-      "description": "Árbol fractal recursivo con 10 niveles de profundidad oscilando.",
-      "file": "fractal-tree.html",
-      "color": "#4ade80",
       "co_author": "MiniMax M3"
     },
     {
@@ -604,7 +329,7 @@
   ],
   "credits": {
     "app": "josevdr95",
-    "wallpapers_50nuevos": "josevdr95 + MiniMax M3",
-    "note": "Los 50 wallpapers nuevos (fecha 2026-06-06) son co-creados con IA MiniMax M3. Los 5 originales y la app son 100% josevdr95."
+    "wallpapers_nuevos": "josevdr95 + MiniMax M3",
+    "note": "Los wallpapers co-creados con IA MiniMax M3 estan marcados con co_author. La app y los 5 originales son 100% josevdr95."
   }
 }
